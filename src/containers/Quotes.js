@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import QuoteCard from '../components/QuoteCard';
+import { removeQuote, upvoteQuote, downvoteQuote } from '../actions/quotes'
 
 class Quotes extends Component {
-
-//this.props.quotes.map((quote,i) => key={i} ,quote={quote}  )
+ 
+  
   render() {
     console.log(this.props.quotes)
-  
+    
+
     return (
       <div>
         <hr />
@@ -18,7 +20,8 @@ class Quotes extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-4">
-            {}
+              {this.props.quotes.map(quote => <QuoteCard key={quote.id} quote={quote} removeQuote={removeQuote} upvoteQuote={upvoteQuote} downvoteQuote={downvoteQuote} />
+            )}
             </div>
           </div>
         </div>
@@ -32,5 +35,6 @@ const mapStateToProps = state => {
   })
 }
 
-//add arguments to connect as needed
-export default connect(mapStateToProps)(Quotes);
+//add arguments to connect as needed this is dipsatch theaction for the card 
+
+export default connect(mapStateToProps, { removeQuote, upvoteQuote, downvoteQuote })(Quotes);

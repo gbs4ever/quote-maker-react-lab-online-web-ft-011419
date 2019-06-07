@@ -1,5 +1,6 @@
 // TODO: Create action creators as defined in tests
 export const addQuote = quote => {
+  console.log(quote)
   return {
     type: 'ADD_QUOTE',
     quote: quote
