@@ -7,14 +7,25 @@ class QuoteForm extends Component {
 
   state = {
     //set up a controlled form with internal state
+    content: "",
+     author: ""
   }
 
   handleOnChange = event => {
-    // Handle Updating Component State
+   this.setState({
+     [event.target.name]: event.target.value
+   })
+   console.log(this.state)
   }
 
   handleOnSubmit = event => {
-    // Handle Form Submit event default
+    event.preventDefault()
+    console.log(this.state, "submitted")
+    this.props.addQuote(this.state)
+    this.setState({
+      content: "",
+      author: ""
+    })
     // Create quote object from state
     // Pass quote object to action creator
     // Update component state to return to default state
@@ -27,11 +38,12 @@ class QuoteForm extends Component {
           <div className="col-md-8 col-md-offset-2">
             <div className="panel panel-default">
               <div className="panel-body">
-                <form className="form-horizontal">
+                <form onSubmit={this.handleOnSubmit} className="form-horizontal">
                   <div className="form-group">
                     <label htmlFor="content" className="col-md-4 control-label">Quote</label>
                     <div className="col-md-5">
-                      <textarea
+                      <textarea onChange={this.handleOnChange}
+                        name= "content"
                         className="form-control"
                         value={this.state.content}
                       />
@@ -41,7 +53,9 @@ class QuoteForm extends Component {
                     <label htmlFor="author" className="col-md-4 control-label">Author</label>
                     <div className="col-md-5">
                       <input
+                        onChange={this.handleOnChange}
                         className="form-control"
+                        name="author"
                         type="text"
                         value={this.state.author}
                       />
@@ -62,5 +76,4 @@ class QuoteForm extends Component {
   }
 }
 
-//add arguments to connect as needed
-export default connect()(QuoteForm);
+export default connect(null,{ addQuote})(QuoteForm);
